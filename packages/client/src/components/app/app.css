@@ -1,0 +1,15 @@
+html,
+body {
+  height: 100vh;
+}
+
+.wrapper {
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.centerComponent {
+  flex: 1 1 auto;
+}

@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  header      String?   @db.VarChar(500)
+  description String?   @db.VarChar(5000)
+  rating      Int?
+  created_at  DateTime? @default(now()) @db.Timestamp(6)
+  updated_at  DateTime? @default(now()) @db.Timestamp(6)
+  language_id Int?
+  author_id   Int?
+  User        User?     @relation(fields: [author_id], references: [id], onDelete: Cascade, map: "Posts_User_id_fk")
+  Lang        Lang?     @relation(fields: [language_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Posts_lang_id_fk")
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  user_name     String?   @unique(map: "User_pk") @db.VarChar(255)
+  last_login_at DateTime? @db.Date
+  password      String    @db.VarChar(255)
+  user_email    String?   @db.VarChar(255)
+  Posts         Post[]
+}
+
+model Lang {
+  id    Int     @id @default(autoincrement())
+  name  String? @db.VarChar(255)
+  year  String? @db.VarChar(255)
+  img_url String? @db.VarChar(500)
+  Posts Post[]
+}
