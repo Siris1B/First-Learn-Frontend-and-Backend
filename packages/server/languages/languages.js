@@ -1,23 +1,24 @@
-import express from "express";
-import db from "../db.js";
-import posts from "../posts/posts.js";
-import * as Yup from "yup";
-import createValidatinMiddlevare from "../middlewares/validationMiddlevare.js";
-import idSchema from "./schemas/idSchema.js";
+import express from 'express';
+import db from '../db.js';
+import posts from '../posts/posts.js';
+import * as Yup from 'yup';
+import createValidatinMiddlevare from '../middlewares/validationMiddlevare.js';
+import idSchema from './schemas/idSchema.js';
 // import languageSchema from "./schemas/languageSchema.js";
-import prisma from "../db-prisma.js";
+import prisma from '../db-prisma.js';
 
 const router = express.Router();
-router.use("/:id/posts", posts);
+router.use('/:id/posts', posts);
 
-router.get("/", async (request, response) => {
+router.get('/', async (request, response) => {
   console.log(request.user_id); ///////////////
   const ansLanguage = await prisma.lang.findMany({});
+  console.log(ansLanguage);
   return response.send(ansLanguage);
 });
 
 router.get(
-  "/:id",
+  '/:id',
   createValidatinMiddlevare(idSchema),
   async (request, response) => {
     const { id } = request.params;
@@ -32,10 +33,10 @@ router.get(
     } catch (e) {
       return response.status(404).send(`There is not language with id:${id}`);
     }
-  }
+  },
 );
 
-router.post("/", async (request, response) => {
+router.post('/', async (request, response) => {
   try {
     const { name, yearOfCreated } = request.body;
     await Yup.object()
@@ -53,7 +54,7 @@ router.post("/", async (request, response) => {
 
     if (ansLanguage.length)
       return response.send(
-        `The language with name: ${name} and year: ${yearOfCreated} is already exist!`
+        `The language with name: ${name} and year: ${yearOfCreated} is already exist!`,
       );
 
     const res = await prisma.lang.create({
@@ -68,13 +69,13 @@ router.post("/", async (request, response) => {
     return response
       .status(422)
       .send(
-        `The request does not contain data or not all the required data is available!`
+        `The request does not contain data or not all the required data is available!`,
       );
   }
 });
 
 router.delete(
-  "/:id",
+  '/:id',
   createValidatinMiddlevare(idSchema),
   async (request, response) => {
     const { id } = request.params;
@@ -89,7 +90,7 @@ router.delete(
       if (!ansLanguage.rows)
         return `The language with name: ${ansLanguage.rows[0].name} is not exist!`;
 
-      const res = await db.query("DELETE FROM lang WHERE id = $1 RETURNING *", [
+      const res = await db.query('DELETE FROM lang WHERE id = $1 RETURNING *', [
         id,
       ]);
 
@@ -103,7 +104,7 @@ router.delete(
     } catch (e) {
       return response.send(e);
     }
-  }
+  },
 );
 
 // router.patch("/:id", async (request, response) => {

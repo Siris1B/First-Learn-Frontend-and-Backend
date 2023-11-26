@@ -1,8 +1,9 @@
-import Router from "./Router";
-import Header from "../header/Header";
-import Footer from "../footer/Footer";
+import Header from '../header/Header';
+import Footer from '../footer/Footer';
 
-import "./app.css";
+import Router from './Router';
+
+import './app.css';
 
 function App() {
   return (

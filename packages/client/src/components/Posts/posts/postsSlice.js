@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getPosts, postPost } from "../../../services/api";
+import { getPosts, postPost } from '../../../services/api';
 
 const initialState = {
   posts: [],
@@ -10,24 +10,24 @@ const initialState = {
 };
 
 export const fetchPosts = createAsyncThunk(
-  "posts/fetchPosts",
+  'posts/fetchPosts',
   async (params) => {
     return await getPosts(params);
-  }
+  },
 );
 
 export const createPost = createAsyncThunk(
-  "posts/createPost",
+  'posts/createPost',
   async (params) => {
     return await postPost(params);
-  }
+  },
 );
 
 const postsSlice = createSlice({
-  name: "posts",
+  name: 'posts',
   initialState,
   reducers: {
-    postsClear: (state, action) => {
+    postsClear: (state) => {
       return {
         ...state,
         posts: [],
@@ -36,7 +36,7 @@ const postsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPosts.pending, (state, action) => {
+      .addCase(fetchPosts.pending, (state) => {
         return {
           ...state,
           postsLoading: true,
@@ -51,13 +51,13 @@ const postsSlice = createSlice({
           posts: [...newPosts],
         };
       })
-      .addCase(createPost.pending, (state, action) => {
+      .addCase(createPost.pending, (state) => {
         return {
           ...state,
           createPostLoading: true,
         };
       })
-      .addCase(createPost.fulfilled, (state, action) => {
+      .addCase(createPost.fulfilled, (state) => {
         return {
           ...state,
           postsLoading: false,

@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import classNames from "classnames";
+import { useState, useEffect } from 'react';
+import classNames from 'classnames';
 
 const Pagination = ({
   totalItems,
@@ -9,7 +9,7 @@ const Pagination = ({
 }) => {
   const [arrOfCurrentPages, setArrOfCurrentPages] = useState([]);
 
-  let pages = [];
+  const pages = [];
 
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pages.push(i);
@@ -24,21 +24,21 @@ const Pagination = ({
         ];
       } else if (currentPage === 4) {
         const sliced = pages.slice(2, 5);
-        tempNumberOfPages = [1, "...", ...sliced, `...`, pages.length];
+        tempNumberOfPages = [1, '...', ...sliced, `...`, pages.length];
       } else if (currentPage > 4 && currentPage < pages.length - 2) {
         const sliced1 = pages.slice(currentPage - 2, currentPage);
         const sliced2 = pages.slice(currentPage, currentPage + 1);
         tempNumberOfPages = [
           1,
-          "...",
+          '...',
           ...sliced1,
           ...sliced2,
-          "...",
+          '...',
           pages.length,
         ];
       } else if (currentPage > pages.length - 3) {
         const sliced = pages.slice(pages.length - 4);
-        tempNumberOfPages = [1, "...", ...sliced];
+        tempNumberOfPages = [1, '...', ...sliced];
       } else if (currentPage >= 1 && currentPage < 4) {
         tempNumberOfPages = [1, 2, 3, 4, 5, `...`, pages.length];
       }
@@ -58,9 +58,9 @@ const Pagination = ({
               setCurrentPage(page);
             }}
             className={classNames({
-              "join-item btn btn-lg": true,
-              "btn-disabled": page === `...`,
-              "btn-active": page === currentPage,
+              'join-item btn btn-lg': true,
+              'btn-disabled': page === `...`,
+              'btn-active': page === currentPage,
             })}
           >
             {page}

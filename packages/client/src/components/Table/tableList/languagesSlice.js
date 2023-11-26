@@ -1,27 +1,27 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getLanguages } from "../../../services/api";
+import { getLanguages } from '../../../services/api';
 
 const initialState = {
   languages: [],
 };
 
 export const fetchLanguages = createAsyncThunk(
-  "languages/languagesFetch",
+  'languages/languagesFetch',
   async () => {
     return await getLanguages();
-  }
+  },
 );
 
 const languagesSlice = createSlice({
-  name: "languages",
+  name: 'languages',
   initialState,
   reducers: {
     languagesRemove: (state, action) => {
       return {
         ...state,
         languages: state.languages.filter(
-          (item) => item.id !== action.payload[0].id
+          (item) => item.id !== action.payload[0].id,
         ),
       };
     },

@@ -1,38 +1,35 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Link } from "react-router-dom";
-import { loginUser } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { loginUser } from '../../services/api';
 
 function LoginPage() {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      userName: "",
-      password: "",
+      userName: '',
+      password: '',
     },
     validationSchema: Yup.object({
       userName: Yup.string()
-        .min(4, "Мінімальний розмір 4 символів")
+        .min(4, 'Мінімальний розмір 4 символів')
         .required("Обов'язкове поле"),
       password: Yup.string()
-        .min(6, "Мінімальна довжина паролю - 6 символів")
-        .required("Потрібно вказати пароль"),
+        .min(6, 'Мінімальна довжина паролю - 6 символів')
+        .required('Потрібно вказати пароль'),
     }),
     onSubmit: async ({ userName, password }) => {
       try {
         const response = await loginUser({ userName, password });
 
         const { token } = response.data;
-        console.log(response);
-        console.log(response.data);
-        console.log(response.data.token);
-        localStorage.setItem("token", token);
-        navigate("/languages");
+        localStorage.setItem('token', token);
+        navigate('/languages');
       } catch (e) {
         console.log(e);
       } finally {
-        formik.resetForm({ userName: "", password: "" });
+        formik.resetForm({ userName: '', password: '' });
       }
     },
   });

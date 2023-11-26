@@ -1,5 +1,4 @@
-import dayjs from "dayjs";
-import React from "react";
+import dayjs from 'dayjs';
 
 export default function PostElement({ post }) {
   function createMarkup() {
@@ -21,7 +20,7 @@ export default function PostElement({ post }) {
             </p>
           </div>
           <p className="text-gray-400 text-sm">
-            {dayjs(post.created_at).format("MMMM D YYYY[, at] hh:mm A")}
+            {dayjs(post.created_at).format('MMMM D YYYY[, at] hh:mm A')}
           </p>
         </div>
       </div>

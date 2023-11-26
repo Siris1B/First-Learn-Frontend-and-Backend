@@ -1,35 +1,35 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 
-import { postLanguages } from "../../../services/api";
-import { useDispatch } from "react-redux";
-import { languagesPost } from "../tableList/languagesSlice";
+import { postLanguages } from '../../../services/api';
+import { languagesPost } from '../tableList/languagesSlice';
 
 function TableAddForm() {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      name: '',
       yearOfCreated: 0,
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(2, "Назва повинна складатись мінімум з 2х символів!")
+        .min(2, 'Назва повинна складатись мінімум з 2х символів!')
         .required("Обов'язкове поле!"),
       yearOfCreated: Yup.number()
-        .min(1900, "Потрібно вказати точний рік")
-        .max(2023, "Потрібно вказати точну дату")
+        .min(1900, 'Потрібно вказати точний рік')
+        .max(2023, 'Потрібно вказати точну дату')
         .required("Обов'язкове поле!"),
     }),
     onSubmit: ({ name, yearOfCreated }) => {
       try {
         postLanguages({ name, yearOfCreated }).then((res) =>
-          dispatch(languagesPost(res.data))
+          dispatch(languagesPost(res.data)),
         );
       } catch (e) {
         console.log(e);
       } finally {
-        formik.resetForm({ name: "", yearOfCreated: 0 });
+        formik.resetForm({ name: '', yearOfCreated: 0 });
       }
     },
   });
@@ -43,7 +43,7 @@ function TableAddForm() {
       >
         <input
           className="border text-black block focus:outline-none px-3 py-1 w-1/3 rounded"
-          style={{ transition: "all .9s ease-out" }}
+          style={{ transition: 'all .9s ease-out' }}
           name="name"
           type="text"
           value={formik.values.name}
@@ -55,7 +55,7 @@ function TableAddForm() {
         ) : null}
         <input
           className=" border text-black block focus:outline-none px-3 py-1 w-1/3 rounded"
-          style={{ transition: "all 2s ease" }}
+          style={{ transition: 'all 2s ease' }}
           name="yearOfCreated"
           type="number"
           value={formik.values.yearOfCreated}
