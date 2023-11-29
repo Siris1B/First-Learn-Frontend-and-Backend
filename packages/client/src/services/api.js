@@ -87,9 +87,9 @@ async function makeApiCall(url, config, headers, data) {
     return response;
   } catch (e) {
     console.log(e);
-    if (e.response.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/';
-    }
+    // if (e.response.status === 401) {
+    //   localStorage.removeItem('token');
+    //   window.location.href = '/';
+    // }
   }
 }

@@ -1,0 +1,18 @@
+.dragFromLeft {
+  animation-name: run;
+  animation-duration: 5s;
+}
+@keyframes run {
+  0% {
+    left: -100%;
+  }
+  25% {
+    left: 50px;
+  }
+  75% {
+    left: 50px;
+  }
+  100% {
+    left: -100%;
+  }
+}

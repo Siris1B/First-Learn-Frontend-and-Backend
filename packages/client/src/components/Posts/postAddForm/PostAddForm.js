@@ -1,16 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import { useDispatch } from 'react-redux';
 
 import 'react-quill/dist/quill.snow.css';
 import { createPost, fetchPosts } from '../posts/postsSlice';
-
+import Loading from '../../../UI/loading/Loading';
+import Success from '../../../UI/infoPortal/Success';
+import Portal from '../../portal/Portal';
 import './postAddForm.css';
 
 export default function PostAddForm({ languageId }) {
   const [post, setPost] = useState('');
   const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(true);
   const dispatch = useDispatch();
 
   async function submitBtnClicked() {
@@ -21,10 +25,13 @@ export default function PostAddForm({ languageId }) {
         .min(5, 'Коментар повине складатась хочаб з 5 символів')
         .required()
         .validate(temp);
+      setLoading(true);
       await dispatch(createPost({ post, id: languageId }));
       await dispatch(fetchPosts({ languageId, page: 1, pageSize: 3 }));
+      setLoading(false);
       setPost('');
     } catch (e) {
+      setLoading(false);
       setStatus('Поле не може бути порожнім!');
       setTimeout(() => {
         setStatus('');
@@ -53,12 +60,15 @@ export default function PostAddForm({ languageId }) {
               onChange={setPost}
             />
             <button className="btn mt-4" onClick={submitBtnClicked}>
-              Add post
+              {loading ? <Loading /> : 'Add post'}
             </button>
             <div>{status}</div>
           </div>
         </div>
       </dialog>
+      <Portal>
+        <Success></Success>
+      </Portal>
     </div>
   );
 }
