@@ -9,6 +9,7 @@ module.exports = {
   globals: {
     process: true,
     module: true,
+    console: true,
   },
   overrides: [
     {
