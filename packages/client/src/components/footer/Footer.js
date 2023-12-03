@@ -1,12 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
     <footer className="bg-white shadow dark:bg-gray-800 mt-4">
       <div className="w-full mx-auto p-4 md:flex md:items-center md:justify-between container">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-          © 2023{" "}
+          © 2023{' '}
           <Link to="/languages" className="hover:underline">
             Langs™
           </Link>

@@ -1,4 +1,4 @@
-import * as Yup from "yup";
+import * as Yup from 'yup';
 
 export default Yup.object({
   id: Yup.number().positive().integer().required(),

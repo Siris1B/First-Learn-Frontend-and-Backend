@@ -1,12 +1,12 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "./postsSlice";
-import Warning from "../../../UI/warning/Warning";
-import PostElement from "../postElement/PostElement";
-import PostAddForm from "../postAddForm/PostAddForm";
-import Pagination from "../../../UI/pagination/Pagination";
-import { postsClear } from "../posts/postsSlice";
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Warning from '../../../UI/warning/Warning';
+import PostElement from '../postElement/PostElement';
+import PostAddForm from '../postAddForm/PostAddForm';
+import Pagination from '../../../UI/pagination/Pagination';
+import { postsClear, fetchPosts } from '../posts/postsSlice';
 
 export default function Posts() {
   const [loading, setLoading] = useState(true);
@@ -37,15 +37,12 @@ export default function Posts() {
   }, []);
 
   const items = posts.map((post) => {
-    console.log(post);
     const { id } = post;
     return <PostElement key={id} post={post} />;
   });
 
   if (loading)
     return <span className="loading loading-spinner loading-lg"></span>;
-
-  console.log(posts);
 
   return (
     <div className="flex flex-col">

@@ -1,16 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import logo from "./logo.png";
+import { Link, useNavigate } from 'react-router-dom';
+
+import logo from './logo.png';
 
 export default function Header() {
   const navigate = useNavigate();
   function onBtnLogoutClick() {
-    localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem('token');
+    navigate('/login');
   }
 
-  if (localStorage.getItem("token")) {
+  if (localStorage.getItem('token')) {
     return (
       <header>
         <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
@@ -38,5 +37,5 @@ export default function Header() {
       </header>
     );
   }
-  return "";
+  return '';
 }

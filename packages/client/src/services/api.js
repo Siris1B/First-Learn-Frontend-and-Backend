@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -6,50 +6,50 @@ const api = axios.create({
 
 export async function getLanguages() {
   const response = await makeApiCall(
-    "/languages",
-    { method: "GET" },
+    '/languages',
+    { method: 'GET' },
     {
       headers: {
-        authorization: localStorage.getItem("token"),
+        authorization: localStorage.getItem('token'),
       },
-    }
+    },
   );
   return response;
 }
 export async function deleteLanguage(id) {
   const response = await makeApiCall(
     `/languages/${id}`,
-    { method: "DELETE" },
+    { method: 'DELETE' },
     {
       headers: {
-        authorization: localStorage.getItem("token"),
+        authorization: localStorage.getItem('token'),
       },
-    }
+    },
   );
   return response;
 }
 
-export async function postLanguages(data) {
+export async function postLanguages() {
   const response = await makeApiCall(
     `/languages`,
-    { method: "POST" },
+    { method: 'POST' },
     {
       headers: {
-        authorization: localStorage.getItem("token"),
+        authorization: localStorage.getItem('token'),
       },
-    }
+    },
     //  data
   );
   return response;
 }
 
 export async function registerUser(data) {
-  const response = await api.post("/auth/signup", data);
+  const response = await api.post('/auth/signup', data);
   return response;
 }
 
 export async function loginUser(data) {
-  const response = await api.post("/auth/signin", data);
+  const response = await api.post('/auth/signin', data);
   return response;
 }
 
@@ -57,12 +57,12 @@ export async function getPosts(params) {
   const { languageId, page, pageSize } = params;
   const response = await makeApiCall(
     `/languages/${languageId}/posts?page=${page}&pageSize=${pageSize}`,
-    { method: "GET" },
+    { method: 'GET' },
     {
       headers: {
-        authorization: localStorage.getItem("token"),
+        authorization: localStorage.getItem('token'),
       },
-    }
+    },
   );
   return response;
 }
@@ -70,13 +70,13 @@ export async function getPosts(params) {
 export async function postPost(data) {
   const response = await makeApiCall(
     `/languages/${data.id}/posts`,
-    { method: "POST" },
+    { method: 'POST' },
     {
       headers: {
-        authorization: localStorage.getItem("token"),
+        authorization: localStorage.getItem('token'),
       },
     },
-    data
+    data,
   );
   return response;
 }
@@ -88,8 +88,8 @@ async function makeApiCall(url, config, headers, data) {
   } catch (e) {
     console.log(e);
     if (e.response.status === 401) {
-      localStorage.removeItem("token");
-      window.location.href = "/";
+      localStorage.removeItem('token');
+      window.location.href = '/';
     }
   }
 }

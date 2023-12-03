@@ -1,15 +1,15 @@
-import express from "express";
-import db from "../db.js";
-import idSchema from "./schemas/idSchema.js";
-import checkIdMiddleware from "./middlewares/checkIdMiddleware.js";
-import createValidatinMiddlevare from "../middlewares/validationMiddlevare.js";
-import prisma from "../db-prisma.js";
+import express from 'express';
+import db from '../db.js';
+import idSchema from './schemas/idSchema.js';
+import checkIdMiddleware from './middlewares/checkIdMiddleware.js';
+import createValidatinMiddlevare from '../middlewares/validationMiddlevare.js';
+import prisma from '../db-prisma.js';
 
 const router = express.Router({
   mergeParams: true,
 });
 
-router.get("/", checkIdMiddleware(idSchema), async (req, res) => {
+router.get('/', checkIdMiddleware(idSchema), async (req, res) => {
   try {
     const page = req.query.page ? +req.query.page : 1;
     const postsPerPage = req.query.postsPerPage ? +req.query.pageSize : 3;
@@ -40,22 +40,22 @@ router.get("/", checkIdMiddleware(idSchema), async (req, res) => {
         id: +id,
       },
       orderBy: {
-        id: "desc",
+        id: 'desc',
       },
     });
     const data = ansLanguage[0].Posts.slice(
       postsPerPage * page - postsPerPage,
-      postsPerPage * page
+      postsPerPage * page,
     );
 
     return res.send({ data, total: ansLanguage[0].Posts.length });
   } catch (e) {
     console.log(e);
-    return res.status(400).send("Bad request.");
+    return res.status(400).send('Bad request.');
   }
 });
 
-router.post("/", createValidatinMiddlevare(idSchema), async (req, res) => {
+router.post('/', createValidatinMiddlevare(idSchema), async (req, res) => {
   try {
     console.log(req.body);
     await prisma.post.create({
@@ -66,7 +66,7 @@ router.post("/", createValidatinMiddlevare(idSchema), async (req, res) => {
       },
     });
 
-    return res.status(200).send("Language added success.");
+    return res.status(200).send('Language added success.');
   } catch (e) {
     console.log(e);
   }

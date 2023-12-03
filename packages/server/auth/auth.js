@@ -1,18 +1,18 @@
-import express from "express";
-import bcrypt from "bcrypt";
-import db from "../db.js";
+import express from 'express';
+import bcrypt from 'bcrypt';
+import db from '../db.js';
 
-import createValidatinMiddlevare from "../middlewares/validationMiddlevare.js";
-import signinSchema from "./schemas/signinSchema.js";
-import signupSchema from "./schemas/baseSchema.js";
-import jwtSign from "./services/jwt.js";
-import prisma from "../db-prisma.js";
-import jwt from "jsonwebtoken";
+import createValidatinMiddlevare from '../middlewares/validationMiddlevare.js';
+import signinSchema from './schemas/signinSchema.js';
+import signupSchema from './schemas/baseSchema.js';
+import jwtSign from './services/jwt.js';
+import prisma from '../db-prisma.js';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
 router.post(
-  "/signup",
+  '/signup',
   createValidatinMiddlevare(signupSchema),
   async (request, response) => {
     try {
@@ -20,7 +20,7 @@ router.post(
 
       const userQuery = await db.query(
         'SELECT "user_name" FROM "User" WHERE "user_name"=$1',
-        [userName]
+        [userName],
       );
       const ansLanguage = await prisma.User.findMany({
         select: {
@@ -33,7 +33,7 @@ router.post(
       console.log(ansLanguage);
 
       if (ansLanguage.length) {
-        return response.status(409).send("User already exist!");
+        return response.status(409).send('User already exist!');
       }
 
       const hash = await bcrypt.hash(password, 10);
@@ -57,8 +57,8 @@ router.post(
           },
           process.env.JWT_SECRET,
           {
-            expiresIn: "30d",
-          }
+            expiresIn: '30d',
+          },
         );
         return response.status(201).send({ token });
       } catch (e) {
@@ -69,11 +69,11 @@ router.post(
       console.log(e);
       return response.status(400);
     }
-  }
+  },
 );
 
 router.post(
-  "/signin",
+  '/signin',
   createValidatinMiddlevare(signinSchema),
   async (request, response) => {
     try {
@@ -85,13 +85,13 @@ router.post(
       });
 
       if (!ansUser) {
-        return response.status(401).send("Wrong user name or password!");
+        return response.status(401).send('Wrong user name or password!');
       }
 
       const isPasswordMatch = await bcrypt.compare(password, ansUser.password);
 
       if (!isPasswordMatch) {
-        return response.status(401).send("Wrong user name or password!");
+        return response.status(401).send('Wrong user name or password!');
       }
 
       if (ansUser && isPasswordMatch) {
@@ -102,7 +102,7 @@ router.post(
       console.log(e);
       return response.status(400);
     }
-  }
+  },
 );
 
 export default router;

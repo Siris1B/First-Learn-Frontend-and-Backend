@@ -1,7 +1,7 @@
 function createValidatinMiddlevare(schema) {
   return async function validationMiddlevare(req, res, next) {
     try {
-      const paramsToValidate = req.method === "POST" ? req.body : req.params;
+      const paramsToValidate = req.method === 'POST' ? req.body : req.params;
       await schema.validate(paramsToValidate, {
         abortEarly: false,
       });

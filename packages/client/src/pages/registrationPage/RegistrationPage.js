@@ -1,34 +1,34 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Link } from "react-router-dom";
-import { registerUser } from "../../services/api";
-import { useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { registerUser } from '../../services/api';
 
 function RegistrationPage() {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      repPassword: "",
-      userName: "",
-      userEmail: "",
-      password: "",
+      repPassword: '',
+      userName: '',
+      userEmail: '',
+      password: '',
     },
     validationSchema: Yup.object({
       repPassword: Yup.string()
-        .min(2, "Мінімальний розмір 2 символи!")
+        .min(2, 'Мінімальний розмір 2 символи!')
         .required("Потрібно вказати ім'я користувача!")
-        .oneOf([Yup.ref("password"), null], "Паролі повинні співпадати!"),
+        .oneOf([Yup.ref('password'), null], 'Паролі повинні співпадати!'),
       userName: Yup.string()
-        .min(4, "Мінімальна довжина логіну - 4 символи!")
-        .required("Потрібно вказати логін!"),
+        .min(4, 'Мінімальна довжина логіну - 4 символи!')
+        .required('Потрібно вказати логін!'),
       userEmail: Yup.string()
-        .email("Потрібно вказати валідний email адрес!")
-        .max(255, "Розмір не може перевищувати 255 символів!")
-        .required("Потрібно вказати email!"),
+        .email('Потрібно вказати валідний email адрес!')
+        .max(255, 'Розмір не може перевищувати 255 символів!')
+        .required('Потрібно вказати email!'),
       password: Yup.string()
-        .min(6, "Мінімальна довжина паролю - 6 символів!")
-        .max(255, "Максимальна довжина паролю - 255 символів!")
-        .required("Потрібно вказати пароль!"),
+        .min(6, 'Мінімальна довжина паролю - 6 символів!')
+        .max(255, 'Максимальна довжина паролю - 255 символів!')
+        .required('Потрібно вказати пароль!'),
     }),
     onSubmit: async ({ userName, userEmail, password }) => {
       try {
@@ -36,16 +36,16 @@ function RegistrationPage() {
         const response = await registerUser(fData);
         console.log(response);
         const { token } = response.data;
-        localStorage.setItem("token", token);
-        navigate("/languages");
+        localStorage.setItem('token', token);
+        navigate('/languages');
       } catch (e) {
         console.log(e);
       } finally {
         formik.resetForm({
-          userName: "",
-          userEmail: "",
-          password: "",
-          repPassword: "",
+          userName: '',
+          userEmail: '',
+          password: '',
+          repPassword: '',
         });
       }
     },

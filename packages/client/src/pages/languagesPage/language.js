@@ -1,5 +1,5 @@
-import TableList from "../../components/Table/tableList/TableList";
-import TableAddForm from "../../components/Table/tableAddForm/TableAddForm";
+import TableList from '../../components/Table/tableList/TableList';
+import TableAddForm from '../../components/Table/tableAddForm/TableAddForm';
 
 export default function Language() {
   return (

@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchLanguages } from "./languagesSlice";
+import TableListItem from '../tableListItem/TableListItem';
 
-import TableListItem from "../tableListItem/TableListItem";
+import { fetchLanguages } from './languagesSlice';
 
 function TableList() {
   const { languages } = useSelector((state) => state.languages);
