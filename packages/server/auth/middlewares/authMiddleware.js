@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import db from '../../db.js';
 
 async function jwtTestMiddleware(req, res, next) {
