@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 export default function jwtSign(userName, userEmail) {
   let token;
@@ -10,8 +10,8 @@ export default function jwtSign(userName, userEmail) {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "30d",
-      }
+        expiresIn: '30d',
+      },
     );
     return token;
   } catch (e) {}
