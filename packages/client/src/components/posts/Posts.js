@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPortal } from 'react-dom';
 
-import Warning from '../../../UI/infoPortal/warning/Warning';
+import Warning from '../../UI/infoPortal/warning/Warning';
 import PostElement from '../postElement/PostElement';
 import PostAddForm from '../postAddForm/PostAddForm';
-import Success from '../../../UI/infoPortal/Success';
-import Pagination from '../../../UI/pagination/Pagination';
-import { postsClear, fetchPosts } from '../posts/postsSlice';
+import Success from '../../UI/infoPortal/Success';
+import Pagination from '../../UI/pagination/Pagination';
+
+import { postsClear, fetchPosts } from './postsSlice';
 
 export default function Posts() {
   const [loading, setLoading] = useState(true);
@@ -41,6 +42,7 @@ export default function Posts() {
 
   useEffect(() => {
     if (newItemCreated) {
+      setPage(1);
       setTimeout(() => {
         setNewItemCreated(false);
       }, 5000);
@@ -55,11 +57,13 @@ export default function Posts() {
   if (loading)
     return <span className="loading loading-spinner loading-lg"></span>;
 
-  console.log(newItemCreated);
-
   return (
-    <div className="flex flex-col">
-      <div className="mt-14">
+    <div className="flex flex-col mt-28">
+      <PostAddForm
+        languageId={languageId}
+        setNewItemCreated={setNewItemCreated}
+      />
+      <div>
         {items.length === 0 ? <Warning title="No post found!" /> : items}
       </div>
       <Pagination
@@ -68,10 +72,7 @@ export default function Posts() {
         currentPage={page}
         itemsPerPage={pageSize}
       />
-      <PostAddForm
-        languageId={languageId}
-        setNewItemCreated={setNewItemCreated}
-      />
+
       {newItemCreated &&
         createPortal(<Success />, document.getElementById('popup'))}
     </div>

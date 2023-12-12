@@ -1,5 +1,4 @@
 import express from 'express';
-import db from '../db.js';
 import idSchema from './schemas/idSchema.js';
 import checkIdMiddleware from './middlewares/checkIdMiddleware.js';
 import createValidatinMiddlevare from '../middlewares/validationMiddlevare.js';
@@ -14,8 +13,6 @@ router.get('/', checkIdMiddleware(idSchema), async (req, res) => {
     const page = req.query.page ? +req.query.page : 1;
     const postsPerPage = req.query.postsPerPage ? +req.query.pageSize : 3;
     const id = req.params.id;
-
-    console.log(page, postsPerPage);
 
     const ansLanguage = await prisma.lang.findMany({
       select: {
@@ -43,21 +40,20 @@ router.get('/', checkIdMiddleware(idSchema), async (req, res) => {
         id: 'desc',
       },
     });
+
     const data = ansLanguage[0].Posts.slice(
       postsPerPage * page - postsPerPage,
       postsPerPage * page,
     );
-
-    return res.send({ data, total: ansLanguage[0].Posts.length });
+    return res.status(200).json({ data, total: ansLanguage[0].Posts.length });
   } catch (e) {
     console.log(e);
-    return res.status(400).send('Bad request.');
+    // return res.status(400).send('Bad request.');
   }
 });
 
 router.post('/', createValidatinMiddlevare(idSchema), async (req, res) => {
   try {
-    console.log(req.body);
     await prisma.post.create({
       data: {
         description: req.body.post,

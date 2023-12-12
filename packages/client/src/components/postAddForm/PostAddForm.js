@@ -5,9 +5,9 @@ import { useDispatch } from 'react-redux';
 
 import 'react-quill/dist/quill.snow.css';
 import { createPost, fetchPosts } from '../posts/postsSlice';
-import Loading from '../../../UI/loading/Loading';
+import Loading from '../../UI/loading/Loading';
 
-import './postAddForm.css';
+import './PostAddForm.css';
 
 export default function PostAddForm({ languageId, setNewItemCreated }) {
   const [post, setPost] = useState('');
@@ -37,11 +37,11 @@ export default function PostAddForm({ languageId, setNewItemCreated }) {
       }, 2000);
     }
   }
-
+  // duration-0 translate-y-[-57px]
   return (
     <div>
       <button
-        className="btn absolute top-[10px] left-[900px]"
+        className="btn block mx-auto "
         onClick={() => document.getElementById('my_modal_1').showModal()}
       >
         Add post
@@ -58,7 +58,7 @@ export default function PostAddForm({ languageId, setNewItemCreated }) {
               value={post}
               onChange={setPost}
             />
-            <button className="btn mt-4" onClick={submitBtnClicked}>
+            <button className="btn mt-4 relative" onClick={submitBtnClicked}>
               {loading ? <Loading /> : 'Add post'}
             </button>
             <div>{status}</div>

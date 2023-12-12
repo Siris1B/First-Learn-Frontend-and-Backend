@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import languages from '../components/Table/tableList/languagesSlice';
-import posts from '../components/Posts/posts/postsSlice';
+import languages from '../components/tableList/languagesSlice';
+import posts from '../components/posts/postsSlice';
 
 const store = configureStore({
   reducer: { languages, posts },

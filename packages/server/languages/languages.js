@@ -11,10 +11,9 @@ const router = express.Router();
 router.use('/:id/posts', posts);
 
 router.get('/', async (request, response) => {
-  console.log(request.user_id); ///////////////
+  console.log(request.user_id);
   const ansLanguage = await prisma.lang.findMany({});
-  console.log(ansLanguage);
-  return response.send(ansLanguage);
+  return response.status(200).json(ansLanguage);
 });
 
 router.get(
@@ -63,7 +62,6 @@ router.post('/', async (request, response) => {
         year: yearOfCreated,
       },
     });
-    console.log(res);
     return response.send(res);
   } catch (e) {
     return response

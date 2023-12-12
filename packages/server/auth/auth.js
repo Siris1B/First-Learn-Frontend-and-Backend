@@ -1,6 +1,5 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
-import db from '../db.js';
 
 import createValidatinMiddlevare from '../middlewares/validationMiddlevare.js';
 import signinSchema from './schemas/signinSchema.js';
@@ -18,10 +17,6 @@ router.post(
     try {
       const { userName, userEmail, password } = request.body;
 
-      const userQuery = await db.query(
-        'SELECT "user_name" FROM "User" WHERE "user_name"=$1',
-        [userName],
-      );
       const ansLanguage = await prisma.User.findMany({
         select: {
           user_name: true,
@@ -30,7 +25,6 @@ router.post(
           user_name: userName,
         },
       });
-      console.log(ansLanguage);
 
       if (ansLanguage.length) {
         return response.status(409).send('User already exist!');

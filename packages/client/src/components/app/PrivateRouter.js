@@ -12,7 +12,9 @@ export default function PrivateRouter() {
   return (
     <div className="h-full">
       <Header />
-      <Outlet />
+      <div className="container relative mx-auto h-[86vh]">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
