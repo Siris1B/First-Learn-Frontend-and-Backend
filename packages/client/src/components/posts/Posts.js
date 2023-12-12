@@ -1,17 +1,21 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { createPortal } from 'react-dom';
 
-import Warning from '../../../UI/warning/Warning';
+import Warning from '../../UI/infoPortal/warning/Warning';
 import PostElement from '../postElement/PostElement';
 import PostAddForm from '../postAddForm/PostAddForm';
-import Pagination from '../../../UI/pagination/Pagination';
-import { postsClear, fetchPosts } from '../posts/postsSlice';
+import Success from '../../UI/infoPortal/Success';
+import Pagination from '../../UI/pagination/Pagination';
+
+import { postsClear, fetchPosts } from './postsSlice';
 
 export default function Posts() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(3);
+  const [newItemCreated, setNewItemCreated] = useState(false);
   const { languageId } = useParams();
   const { posts, postsLoading, total } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
@@ -36,6 +40,15 @@ export default function Posts() {
     };
   }, []);
 
+  useEffect(() => {
+    if (newItemCreated) {
+      setPage(1);
+      setTimeout(() => {
+        setNewItemCreated(false);
+      }, 5000);
+    }
+  }, [newItemCreated]);
+
   const items = posts.map((post) => {
     const { id } = post;
     return <PostElement key={id} post={post} />;
@@ -45,8 +58,12 @@ export default function Posts() {
     return <span className="loading loading-spinner loading-lg"></span>;
 
   return (
-    <div className="flex flex-col">
-      <div className="mt-14">
+    <div className="flex flex-col mt-28">
+      <PostAddForm
+        languageId={languageId}
+        setNewItemCreated={setNewItemCreated}
+      />
+      <div>
         {items.length === 0 ? <Warning title="No post found!" /> : items}
       </div>
       <Pagination
@@ -55,7 +72,9 @@ export default function Posts() {
         currentPage={page}
         itemsPerPage={pageSize}
       />
-      <PostAddForm languageId={languageId} />
+
+      {newItemCreated &&
+        createPortal(<Success />, document.getElementById('popup'))}
     </div>
   );
 }

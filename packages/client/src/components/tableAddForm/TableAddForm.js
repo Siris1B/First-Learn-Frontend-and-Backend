@@ -2,8 +2,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from 'react-redux';
 
-import { postLanguages } from '../../../services/api';
-import { languagesPost } from '../tableList/languagesSlice';
+import { postLanguages } from '../../services/api';
+import { languagesPost } from '../Table/tableList/languagesSlice';
 
 function TableAddForm() {
   const dispatch = useDispatch();

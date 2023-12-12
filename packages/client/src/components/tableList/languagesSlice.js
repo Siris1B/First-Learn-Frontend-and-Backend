@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getLanguages } from '../../../services/api';
+import { getLanguages } from '../../services/api';
 
 const initialState = {
   languages: [],
@@ -34,25 +34,12 @@ const languagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(fetchLanguages.pending, state => {
-      //     return {
-      //         ...state,
-      //         languagesLoadingStatus: 'loading'
-      //     }
-      // })
       .addCase(fetchLanguages.fulfilled, (state, action) => {
         return {
           ...state,
           languages: action.payload.data,
-          // languagesLoadingStatus: "idle",
         };
       })
-      // .addCase(fetchLanguages.rejected, state => {
-      //     return {
-      //         ...state,
-      //         languagesLoadingStatus: "error",
-      //       }
-      // })
       .addDefaultCase(() => {});
   },
 });

@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import ReactQuill from 'react-quill';
 import { useDispatch } from 'react-redux';
 
 import 'react-quill/dist/quill.snow.css';
 import { createPost, fetchPosts } from '../posts/postsSlice';
+import Loading from '../../UI/loading/Loading';
 
-import './postAddForm.css';
+import './PostAddForm.css';
 
-export default function PostAddForm({ languageId }) {
+export default function PostAddForm({ languageId, setNewItemCreated }) {
   const [post, setPost] = useState('');
   const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   async function submitBtnClicked() {
@@ -21,21 +23,25 @@ export default function PostAddForm({ languageId }) {
         .min(5, 'Коментар повине складатась хочаб з 5 символів')
         .required()
         .validate(temp);
+      setLoading(true);
       await dispatch(createPost({ post, id: languageId }));
       await dispatch(fetchPosts({ languageId, page: 1, pageSize: 3 }));
+      setLoading(false);
+      setNewItemCreated(true);
       setPost('');
     } catch (e) {
+      setLoading(false);
       setStatus('Поле не може бути порожнім!');
       setTimeout(() => {
         setStatus('');
       }, 2000);
     }
   }
-
+  // duration-0 translate-y-[-57px]
   return (
     <div>
       <button
-        className="btn absolute top-[10px] left-[900px]"
+        className="btn block mx-auto "
         onClick={() => document.getElementById('my_modal_1').showModal()}
       >
         Add post
@@ -52,8 +58,8 @@ export default function PostAddForm({ languageId }) {
               value={post}
               onChange={setPost}
             />
-            <button className="btn mt-4" onClick={submitBtnClicked}>
-              Add post
+            <button className="btn mt-4 relative" onClick={submitBtnClicked}>
+              {loading ? <Loading /> : 'Add post'}
             </button>
             <div>{status}</div>
           </div>

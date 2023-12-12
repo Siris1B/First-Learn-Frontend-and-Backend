@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import db from '../../db.js';
 
 async function jwtTestMiddleware(req, res, next) {
@@ -16,8 +17,8 @@ async function jwtTestMiddleware(req, res, next) {
     if (!user.rows.length) return res.status(401).send('Invalid JWT');
     req.user_id = user.rows[0].id;
   } catch (e) {
-    console.log(e);
-    return res.status(401).send('JWT was moddified!!');
+    // console.log(e);
+    // return res.status(401).send('JWT was moddified!!');
   }
   req.payload = { ...req.payload, vetifyedToken };
   next();

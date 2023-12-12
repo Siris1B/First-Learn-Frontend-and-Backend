@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './tableListItem.css';
+import './TableListItem.css';
 
 import notFound from './notFound.webp';
 

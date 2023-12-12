@@ -1,8 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import LoginPage from '../../pages/loginPage/LoginPage.js';
-import RegistrationPage from '../../pages/registrationPage/RegistrationPage.js';
-import Posts from '../Posts/posts/Posts.js';
+import AuthPage from '../../pages/authPage/AuthPage.js';
+import Posts from '../posts/Posts.js';
 import Language from '../../pages/languagesPage/language.js';
 
 import PrivateRouter from './PrivateRouter.js';
@@ -16,8 +15,8 @@ export default function Router() {
         <Route path="/languages/:languageId/posts" element={<Posts />} />
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Route>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegistrationPage />} />
+      <Route path="/login" element={<AuthPage />} />
+      <Route path="/register" element={<AuthPage />} />
     </Routes>
   );
 }

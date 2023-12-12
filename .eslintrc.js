@@ -10,6 +10,7 @@ module.exports = {
     process: true,
     module: true,
     console: true,
+    require: true,
   },
   overrides: [
     {
